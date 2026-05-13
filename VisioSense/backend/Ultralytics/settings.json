@@ -1,0 +1,21 @@
+{
+  "settings_version": "0.0.6",
+  "datasets_dir": "C:\\datasets",
+  "weights_dir": "C:\\weights",
+  "runs_dir": "C:\\runs",
+  "uuid": "700b6610e77f02977c8ca05c1adcde2e5d588ad7204340a06dbe34902a943d4b",
+  "sync": true,
+  "api_key": "",
+  "openai_api_key": "",
+  "clearml": true,
+  "comet": true,
+  "dvc": true,
+  "hub": true,
+  "mlflow": true,
+  "neptune": true,
+  "raytune": true,
+  "tensorboard": false,
+  "wandb": false,
+  "vscode_msg": true,
+  "openvino_msg": true
+}

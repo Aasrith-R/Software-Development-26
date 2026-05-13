@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>VisioSpeak — Captions</title>
+  <link rel="stylesheet" href="panel.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="visio-logo.svg" class="logo" alt=""/>
+      <span class="title">VisioSpeak</span>
+    </div>
+    <div class="controls">
+      <label class="ctrl-label">
+        Language
+        <select id="lang">
+          <option value="en-US">English (US)</option>
+          <option value="en-GB">English (UK)</option>
+          <option value="es-ES">Español (ES)</option>
+          <option value="fr-FR">Français (FR)</option>
+          <option value="de-DE">Deutsch (DE)</option>
+          <option value="it-IT">Italiano (IT)</option>
+          <option value="pt-BR">Português (BR)</option>
+          <option value="hi-IN">हिन्दी (IN)</option>
+          <option value="ja-JP">日本語 (JP)</option>
+          <option value="ko-KR">한국어 (KR)</option>
+          <option value="zh-CN">中文 (简体)</option>
+        </select>
+      </label>
+      <label class="ctrl-label">
+        Size
+        <input id="fontSize" type="range" min="16" max="96" value="36"/>
+      </label>
+    </div>
+    <div id="pill" class="pill" data-state="idle">
+      <span class="dot"></span>
+      <span id="pillText">Idle</span>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div id="captions" class="captions" role="log" aria-live="polite"></div>
+    <div id="interim" class="interim"></div>
+    <div id="hint" class="hint">Press <strong>Start</strong> to begin listening.</div>
+    <div id="errorBox" class="error-box" hidden></div>
+  </main>
+
+  <footer class="bottombar">
+    <button id="btnStart" class="btn-primary">Start</button>
+    <button id="btnStop"  class="btn-ghost" disabled>Stop</button>
+    <button id="btnClear" class="btn-ghost">Clear</button>
+    <button id="btnCopy"  class="btn-ghost">Copy</button>
+  </footer>
+
+  <script src="panel.js"></script>
+</body>
+</html>
