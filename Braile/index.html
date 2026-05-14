@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Braille 3D Model Generator</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <h1>Braille 3D Model Generator</h1>
+        <p class="subtitle">Grade 1 (uncontracted) English Braille to 3D-printable STL</p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel" aria-label="Input panel">
+        <div class="card">
+          <div class="field">
+            <div class="field__row">
+              <label for="textInput" class="label">Enter text</label>
+              <div class="counter"><span id="charCount">0</span>/200</div>
+            </div>
+            <textarea
+              id="textInput"
+              maxlength="200"
+              rows="6"
+              placeholder="Type text here (use Enter for new line)..."
+              spellcheck="false"
+            ></textarea>
+          </div>
+
+          <div class="grid2">
+            <div class="toggle">
+              <label class="toggle__label" for="includePlate">Include base plate</label>
+              <input id="includePlate" type="checkbox" checked />
+            </div>
+
+            <div class="field">
+              <label class="label" for="dotShape">Dot shape</label>
+              <select id="dotShape">
+                <option value="hemisphere" selected>Hemisphere</option>
+                <option value="cone">Cone</option>
+                <option value="cylinder">Cylinder</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sliders">
+            <div class="slider" data-key="dotDiameterMm">
+              <div class="slider__head">
+                <label class="label" for="dotDiameterMm">Dot diameter (mm)</label>
+                <div class="slider__value">
+                  <input id="dotDiameterMmNumber" type="number" step="0.1" min="1.0" max="2.5" />
+                </div>
+              </div>
+              <input id="dotDiameterMm" type="range" min="1.0" max="2.5" step="0.1" />
+            </div>
+
+            <div class="slider" data-key="dotHeightMm">
+              <div class="slider__head">
+                <label class="label" for="dotHeightMm">Dot height (mm)</label>
+                <div class="slider__value">
+                  <input id="dotHeightMmNumber" type="number" step="0.1" min="0.3" max="1.2" />
+                </div>
+              </div>
+              <input id="dotHeightMm" type="range" min="0.3" max="1.2" step="0.1" />
+            </div>
+
+            <div class="slider" data-key="dotSpacingMm">
+              <div class="slider__head">
+                <label class="label" for="dotSpacingMm">Dot spacing within cell (mm)</label>
+                <div class="slider__value">
+                  <input id="dotSpacingMmNumber" type="number" step="0.1" min="2.0" max="3.0" />
+                </div>
+              </div>
+              <input id="dotSpacingMm" type="range" min="2.0" max="3.0" step="0.1" />
+            </div>
+
+            <div class="slider" data-key="cellSpacingMm">
+              <div class="slider__head">
+                <label class="label" for="cellSpacingMm">Cell spacing (mm)</label>
+                <div class="slider__value">
+                  <input id="cellSpacingMmNumber" type="number" step="0.1" min="5.0" max="8.0" />
+                </div>
+              </div>
+              <input id="cellSpacingMm" type="range" min="5.0" max="8.0" step="0.1" />
+            </div>
+
+            <div class="slider" data-key="lineSpacingMm">
+              <div class="slider__head">
+                <label class="label" for="lineSpacingMm">Line spacing (mm)</label>
+                <div class="slider__value">
+                  <input id="lineSpacingMmNumber" type="number" step="0.1" min="8.0" max="14.0" />
+                </div>
+              </div>
+              <input id="lineSpacingMm" type="range" min="8.0" max="14.0" step="0.1" />
+            </div>
+
+            <div class="slider" data-key="plateThicknessMm">
+              <div class="slider__head">
+                <label class="label" for="plateThicknessMm">Base plate thickness (mm)</label>
+                <div class="slider__value">
+                  <input id="plateThicknessMmNumber" type="number" step="0.1" min="1.0" max="5.0" />
+                </div>
+              </div>
+              <input id="plateThicknessMm" type="range" min="1.0" max="5.0" step="0.1" />
+            </div>
+
+            <div class="slider" data-key="plateMarginMm">
+              <div class="slider__head">
+                <label class="label" for="plateMarginMm">Base plate margin (mm)</label>
+                <div class="slider__value">
+                  <input id="plateMarginMmNumber" type="number" step="0.5" min="2.0" max="15.0" />
+                </div>
+              </div>
+              <input id="plateMarginMm" type="range" min="2.0" max="15.0" step="0.5" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="generateBtn" class="btn btn--primary" type="button">Generate</button>
+            <button id="downloadBtn" class="btn" type="button" disabled>Download STL</button>
+            <button id="resetBtn" class="btn" type="button">Reset to defaults</button>
+          </div>
+
+          <div id="status" class="status" role="status" aria-live="polite">
+            Loading 3D engine...
+          </div>
+
+          <div class="info">
+            <strong>Tip:</strong> Print at 100% scale. Recommended layer height: 0.1mm. No supports needed.
+          </div>
+        </div>
+      </section>
+
+      <section class="preview" aria-label="3D preview">
+        <div class="card card--preview">
+          <div class="preview__head">
+            <div class="preview__title">Live 3D Preview</div>
+            <div class="preview__hint">Drag to rotate | Scroll to zoom | Right-drag to pan</div>
+          </div>
+          <div id="viewport" class="viewport" role="img" aria-label="3D preview viewport"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <span>Made with Three.js | Exports binary STL</span>
+      </div>
+    </footer>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script
+      type="module"
+      src="./app.js"
+      onerror="document.getElementById('status').textContent = '3D engine did not load. Run this folder through a local server and open http://localhost:8000/.'"
+    ></script>
+  </body>
+</html>
